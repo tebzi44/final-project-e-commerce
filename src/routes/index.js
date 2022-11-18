@@ -15,7 +15,7 @@ router.use('/auth', AuthRoutes);
 // Auth Middleware
 router.use(checkAuth);
 
-// router.use('/products', ProductRoutes);
+router.use('/products', ProductRoutes);
 // router.use('/users', UserRoutes);
 // router.use('/product_types', product_typeRoutes);
 

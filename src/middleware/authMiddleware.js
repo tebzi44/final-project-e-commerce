@@ -5,12 +5,13 @@ const checkAuth = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
 
-    const { userId } = jwt.verify(
+    const { userId, isAdmin } = jwt.verify(
       token,
       'secretKey123',);
 
     req.user = {
-      userId
+      userId,
+      isAdmin
     };
 
     return next();

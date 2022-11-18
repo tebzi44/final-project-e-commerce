@@ -3,7 +3,7 @@ const router = require('express').Router();
 const productController = require('../controllers/productController')
 
 
-
+// პროდუქტების წამოღება
 router.get('/', productController.getProduct)
 
 

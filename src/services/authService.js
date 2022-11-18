@@ -15,11 +15,12 @@ const login = async ({
     }
   });
 
+  // console.log(user);
+
   if (user) {
-    const token = jwt
-      .sign(
-        {
+    const token = jwt.sign({
           userId: user.id,
+          isAdmin: user.isAdmin
         },
         'secretKey123',
         {

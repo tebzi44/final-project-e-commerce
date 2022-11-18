@@ -1,50 +1,50 @@
-// const User = require("../db/models/user.model");
+const User = require("../db/models/user.model");
 
-// const deleteUser = async (userId)=> {
+const deleteUser = async (userId)=> {
 
-//   const user = await User.findByPk(userId)
+  const user = await User.findByPk(userId)
   
-//   if(!user || user.deletedAt !== null){
-//     const result = await User.Updata({
-//       deletedAt: new Date(),
-//     }, 
-//     {
-//       where: {
-//         id: userId
-//       }
-//     })
-//     return true
-//   } else {
-//     return false
-//   }
-// }
+  if(!user || user.deletedAt !== null){
+    const result = await User.Updata({
+      deletedAt: new Date(),
+    }, 
+    {
+      where: {
+        id: userId
+      }
+    })
+    return true
+  } else {
+    return false
+  }
+}
 
 
-// const update = async (userId) => {
-//     const user = await User.findByPk(userId)
+const update = async (userId) => {
+    const user = await User.findByPk(userId)
 
-//     if(!user || user.deletedAt !== null){
-//         const result = await User.Updata({
-//           updateAt: new Date(),
-//         },
-//         {
-//           where: {
-//             id: userId
-//           }
-//         })
+    if(!user || user.deletedAt !== null){
+        const result = await User.Updata({
+          updateAt: new Date(),
+        },
+        {
+          where: {
+            id: userId
+          }
+        })
 
-//       return true
+      return true
 
-//     } else { 
-//       return false
-//     }
-// }
-
-
+    } else { 
+      return false
+    }
+}
 
 
 
-// module.exports = {
-//   deleteUser,
-//   update
-// }
+
+
+module.exports = {
+  deleteUser,
+  update
+}
