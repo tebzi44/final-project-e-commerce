@@ -1,10 +1,8 @@
 const Product = require('../db/models/product.model')
 
 
-
+// GET ALL PRODUCT +
 const getAllProducts = async ({ isAdmin, userId }) => {
-
-    // console.log(isAdmin, userId);
 
     if(isAdmin === 1) {
         const data = await Product.findAll({
@@ -13,11 +11,9 @@ const getAllProducts = async ({ isAdmin, userId }) => {
                 deletedAt: null
             }
         });
-        console.log('adminshi shemovida');
         return data
     }
     
-
         const data = await Product.findAll({
             attributes: ['name', 'price','condition','productTypeId','state','productSize'],
             where: {
@@ -29,10 +25,12 @@ const getAllProducts = async ({ isAdmin, userId }) => {
         return (!data.length ? {message:'data is empty'} : data);
 }
 
-//ADD
+
+
+//ADD PRODUCT
 const addProduct = async({userId, isAdmin,name, price, condition, productTypeId, state, productSize})=> {
 
-    console.log({userId, isAdmin,name, price, condition, productTypeId, state, productSize});
+    // console.log({userId, isAdmin,name, price, condition, productTypeId, state, productSize});
 
     if(!name || !price || !condition || !productTypeId || !state || !productSize){
 
@@ -40,9 +38,9 @@ const addProduct = async({userId, isAdmin,name, price, condition, productTypeId,
     }
 
 
-// ერორს მიწერ productTypeId არ უნდა იყოს ნალიო!!!!!!
-    const result = await Product.create({
-        userId,
+// ერორს მიწერ productTypeId არ უნდა იყოს ნალიო!!
+    await Product.create({
+        userId: 12,
         createdAt: new Date(),
         name,
         price,
@@ -57,7 +55,76 @@ const addProduct = async({userId, isAdmin,name, price, condition, productTypeId,
 }
 
 
+//UPDATE PRODUCT
+const updateProductById = async ({productId, userId, name, price, condition, productTypeId, state, productSize}) => {
+
+    if(isAdmin === 1) {
+        await Product.update({
+        name,
+        price,
+        condition,
+        productTypeId,
+        state,
+        productSize,
+        updatedAt: new Date(),
+            where: {
+                id: productId,
+                deletedAt: null
+            }
+        })
+        return {message: 'product updated by admin'}
+    }
+
+    await Product.update({
+        name,
+        price,
+        condition,
+        productTypeId,
+        state,
+        productSize,
+        updatedAt: new Date(),
+        where: {
+            id: productId,
+            userId,
+            deletedAt: null
+        }
+    })
+    return {message: 'product updated'}
+}
+
+
+//DELETE PRODUCT
+const deleteProductById = async ({isAdmin, userId, productId})=> {
+
+    if(isAdmin === 1) {
+        await Product.update({
+            deletedAt: new Date(),
+            where: {
+                id: productId,
+                deletedAt: null
+            }
+        })
+        return {message: 'product deleted by admin'}
+    }
+
+    await Product.update({
+        deleteAt: new Date(),
+        where: {
+            id: productId,
+            userId,
+            deletedAt: null
+        }
+    })
+    return {message: 'product deleted by user'}
+}
+
+
+
+
+
 module.exports = {
     getAllProducts,
-    addProduct
+    addProduct,
+    updateProductById,
+    deleteProductById
 }

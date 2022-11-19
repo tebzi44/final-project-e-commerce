@@ -1,27 +1,19 @@
 // const User = require('../db/models/user.model');
+const router = require('express').Router();
 
-// const userController = require('../controllers/userController')
-
-// const router = require('express').Router();
-
+const userController = require('../controllers/userController')
 
 
-
-// router.get('/', async (req, res) => {
-//     const result = await User.findAll({
-//         attributes: ['firstName', 'lastName'],
-//         where: {
-//             deletedAt: null
-//         }
-//     })
-//     return res.json({ data: result });
-// })
-
-
-// router.delete('/:userId', userController.deleteUser)
-
-// router.put('/:userId', userController.updateUser)
+//++
+router.get('/', userController.getUsers)
+//++
+router.post('/', userController.addUser)
+//?
+router.put('/:userId', userController.updateUser)
+//?
+router.delete('/:userId', userController.deleteUser)
 
 
 
-// module.exports = router;
+
+module.exports = router;

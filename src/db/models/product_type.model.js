@@ -10,7 +10,9 @@ class Product_type extends Model {
       }
     }, {
       sequelize: connection,
-      tableName: 'product_types'
+      tableName: 'product_types',
+      //es davamate
+      timestamps: true
     });
   }
 

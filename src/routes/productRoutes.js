@@ -3,16 +3,20 @@ const router = require('express').Router();
 const productController = require('../controllers/productController')
 
 
-// პროდუქტების წამოღება
+//+
 router.get('/', productController.getProduct)
 
-
-
+//??ნახევრად აწყობილი, ერორები აქვს
 router.post('/', productController.addProduct)
+//??
 router.put('/:productId', productController.updateProduct)
+//??
 router.delete('/:productId', productController.deleteProduct)
 
 
+
+
+module.exports = router;
 
 
 
@@ -62,5 +66,4 @@ router.delete('/:productId', productController.deleteProduct)
 
 // });
 
-module.exports = router;
 

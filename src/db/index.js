@@ -1,4 +1,4 @@
-const process = require('process');
+// const process = require('process');
 const signale = require('signale');
 const { Sequelize } = require('sequelize');
 
@@ -32,6 +32,7 @@ const connection = new Sequelize(
 
 models.map((m) => m.init(connection));
 
+
 //eta ras
 User.hasMany(Product, {
   foreignKey: {
@@ -48,6 +49,7 @@ Product.belongsTo(User, {
 })
 
 
+
 //second one
 Product_type.hasMany(Product, {
   foreignKey: {
@@ -62,6 +64,9 @@ Product.belongsTo(Product_type, {
     allowNull:false
   }
 });
+
+
+
 
 
 (async () => {

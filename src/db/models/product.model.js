@@ -23,18 +23,18 @@ class Product extends Model {
         type: DataTypes.TIME,
         allowNull: true,
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
+      // userId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
       condition: {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      productTypeId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
+      // productTypeId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      // },
       state: {
         type: DataTypes.STRING(20),
         allowNull: false,
@@ -46,7 +46,8 @@ class Product extends Model {
     }, {
       sequelize: connection,
       tableName: 'products',
-      timestamps: true
+      timestamps: true,
+      updatedAt: false
     });
   }
 }

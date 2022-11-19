@@ -1,41 +1,45 @@
-
-// const userService = require('../services/userService')
-
-
-// const deleteUser = (req, res)=> {
-//     const { userId } = req.params
-
-//    const deleteUser = userService.deleteUser(userId)
-//     if(deleteUser == true){
-//         res.json({
-//             message: 'user has been deleted'
-//         })
-//     } else {
-//         res.json({
-//             message: 'user cannot be found'
-//         })
-//     }
-// }
-
-// const updateUser = (req, res) => {
-//     const { userId } = req.params
-
-//     const updateUser = userService.update(userId)
-
-//     if(updateUser == true){
-//         res.json({
-//             message: 'user has been updated'
-//         })
-//     } else {
-//         res.json({
-//             message: 'user cannot be found'
-//         })
-//     }
-// }
+const userService = require('../services/userService')
 
 
 
-// module.exports = {
-//     deleteUser,
-//     updateUser
-// } 
+const getUsers = async (req, res)=> {
+    const data = await userService.getAllUsers()  
+    res.json(data)
+
+}
+
+
+//ADD USER
+const addUser = async (req, res)=>{
+    const { firstName, lastName, email, password, phoneNumber, isAdmin } = req.body
+    const result = await userService.addUser({ firstName, lastName, email, password, phoneNumber, isAdmin })
+    res.json(result)
+}
+
+
+//USER UPDATE
+const updateUser = async (req, res) => {
+    const { userId } = req.params
+    const { isAdmin, firstName, lastName, email, password, phoneNumber } = req.body
+
+    const updateUser = await userService.updateUser({userId, isAdmin, firstName, lastName, email, password, phoneNumber })
+    res.json(updateUser)
+}
+
+
+//USER DELETE
+const deleteUser = async (req, res)=> {
+    const { userId } = req.params
+
+    const deleteUser = await userService.deleteUser(userId)
+    res.json(deleteUser)
+}
+
+
+
+module.exports = {
+    getUsers,
+    addUser,
+    updateUser,
+    deleteUser
+} 
