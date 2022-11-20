@@ -1,5 +1,5 @@
 const Product = require('../db/models/product.model')
-
+const Log = require('../mongodb/models/log.model')
 
 // GET ALL PRODUCT +
 const getAllProducts = async ({ isAdmin, userId }) => {
@@ -28,7 +28,7 @@ const getAllProducts = async ({ isAdmin, userId }) => {
 
 
 //ADD PRODUCT
-const addProduct = async({userId, isAdmin,name, price, condition, productTypeId, state, productSize})=> {
+const addProduct = async({userId, name, price, condition, productTypeId, state, productSize})=> {
 
     // console.log({userId, isAdmin,name, price, condition, productTypeId, state, productSize});
 
@@ -38,9 +38,9 @@ const addProduct = async({userId, isAdmin,name, price, condition, productTypeId,
     }
 
 
-// ერორს მიწერ productTypeId არ უნდა იყოს ნალიო!!
+// ერორს მიწერ productTypeId არ უნდა იყოს null-იო!!
     await Product.create({
-        userId: 12,
+        userId,
         createdAt: new Date(),
         name,
         price,
@@ -49,14 +49,25 @@ const addProduct = async({userId, isAdmin,name, price, condition, productTypeId,
         state,
         productSize,
     });
+
+    const creationLog = new Log({
+        userId,
+        actionType: 'CREATED',
+        dataType: 'PRODUCT'
+      })
+      await creationLog.save()
     
     return {message:'product added successfully'}
-    
 }
 
 
+
+
+
+
+
 //UPDATE PRODUCT
-const updateProductById = async ({productId, userId, name, price, condition, productTypeId, state, productSize}) => {
+const updateProductById = async ({productId, userId, isAdmin, name, price, condition, productTypeId, state, productSize}) => {
 
     if(isAdmin === 1) {
         await Product.update({
@@ -72,6 +83,17 @@ const updateProductById = async ({productId, userId, name, price, condition, pro
                 deletedAt: null
             }
         })
+
+        const updatingProductLog = new Log({
+            userId,
+            isAdmin,
+            productId,
+            actionType: 'UPDATED',
+            dataType: 'PRODUCT',
+          })
+    
+          await updatingProductLog.save()
+
         return {message: 'product updated by admin'}
     }
 
@@ -89,8 +111,23 @@ const updateProductById = async ({productId, userId, name, price, condition, pro
             deletedAt: null
         }
     })
+
+    const updatingProductLog = new Log({
+        userId,
+        productId,
+        actionType: 'UPDATED',
+        dataType: 'PRODUCT'
+      })
+      await updatingProductLog.save()
+
     return {message: 'product updated'}
 }
+
+
+
+
+
+
 
 
 //DELETE PRODUCT
@@ -104,8 +141,19 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
                 deletedAt: null
             }
         })
+
+        const deletingProductLog = new Log({
+            userId,
+            isAdmin,
+            productId,
+            actionType: 'DELETED',
+            dataType: 'PRODUCT'
+          })
+          await deletingProductLog.save()
+
         return {message: 'product deleted by admin'}
     }
+
 
     await Product.update({
         deleteAt: new Date(),
@@ -115,10 +163,17 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
             deletedAt: null
         }
     })
+
+    const deletingProductLog = new Log({
+        userId,
+        productId,
+        actionType: 'DELETED',
+        dataType: 'PRODUCT'
+      })
+      await deletingProductLog.save()
+
     return {message: 'product deleted by user'}
 }
-
-
 
 
 

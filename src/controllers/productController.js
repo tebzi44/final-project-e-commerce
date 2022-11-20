@@ -8,7 +8,6 @@ const getProduct = async (req, res) => {
 
     const data = await productService.getAllProducts({ isAdmin, userId });
 
-
     return res.json(data);
 }
 
@@ -16,14 +15,14 @@ const getProduct = async (req, res) => {
 
 
 
-
+//ADD-PRODUCT
 const addProduct = async (req, res) => {
     const {userId, isAdmin} = req.user
     const { name, price, condition, productTypeId, state, productSize } = req.body
 
     // console.log(userId, isAdmin, req.body);
 
-    const result = await productService.addProduct({userId, isAdmin,name, price, condition, productTypeId, state, productSize})
+    const result = await productService.addProduct({userId, isAdmin ,name, price, condition, productTypeId, state, productSize})
 
     res.json(result)
 }

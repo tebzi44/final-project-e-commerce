@@ -1,5 +1,5 @@
-const user = require("../db/models/user.model");
-
+const user = require('../db/models/user.model');
+const Log = require('../mongodb/models/log.model')
 
 
 const getAllUsers = async ()=> {
@@ -12,7 +12,7 @@ const getAllUsers = async ()=> {
 
 
 //USER ADD
-const addUser = async ({ firstName, lastName, email, password, phoneNumber, isAdmin })=> {
+const addUser = async ({ firstName, lastName, email, password, phoneNumber, isAdmin, userId })=> {
 
   if(!firstName || !lastName || !email || !password || !phoneNumber){
     return {message:'Not filled in all parts'}
@@ -26,6 +26,16 @@ const addUser = async ({ firstName, lastName, email, password, phoneNumber, isAd
     phoneNumber,
     isAdmin
   })
+
+  const creatingUserLog = new Log({
+    userId,
+    isAdmin,
+    actionType: 'CREATED',
+    dataType: 'USER'
+  })
+
+  await creatingUserLog.save()
+  
   return {message: 'User added successfully'}
 }
 
@@ -54,6 +64,15 @@ const updateUser = async ({userId, isAdmin, firstName, lastName, email, password
         id: userId
       }  
     })
+
+    const deletingUserLog = new Log({
+      userId,
+      isAdmin,
+      actionType: 'CREATED',
+      dataType: 'USER'
+    })
+  
+    await deletingUserLog.save()
 
     return {message: 'User updated successfully'}
 }

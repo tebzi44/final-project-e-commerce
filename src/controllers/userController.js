@@ -11,8 +11,9 @@ const getUsers = async (req, res)=> {
 
 //ADD USER
 const addUser = async (req, res)=>{
+    const { userId } = req.user
     const { firstName, lastName, email, password, phoneNumber, isAdmin } = req.body
-    const result = await userService.addUser({ firstName, lastName, email, password, phoneNumber, isAdmin })
+    const result = await userService.addUser({ firstName, lastName, email, password, phoneNumber, isAdmin, userId })
     res.json(result)
 }
 
