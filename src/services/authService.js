@@ -1,7 +1,9 @@
 const User = require('../db/models/user.model')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
 const Log = require('../mongodb/models/log.model')
+
+// const bcrypt = require('bcrypt')
+// const process = require('process');
 
 
 const login = async ({
@@ -57,7 +59,8 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
   if(checkEmail || checkPhoneNumber){
       return { message:'user already exists'}
   }
-
+  
+  //>>>>
   // const hashedPass = bcrypt.hash(
   //     password,
   //     process.env.saltRounds,
@@ -67,13 +70,14 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
   //         }
   //         return hash
   //     });
+  //>>>>
+
   await User.create({
       firstName,
       lastName,
       email,
       password,
       phoneNumber
-      //   : hashedPass
     });
 
     const creationLog = new Log({
@@ -82,7 +86,7 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
     });
 
     await creationLog.save()
-    
+
   return { message: 'user add'}
 }
 

@@ -3,7 +3,11 @@ const Log = require('../mongodb/models/log.model')
 
 
 const getAllUsers = async ()=> {
-  const data = await user.findAll()
+  const data = await user.findAll({
+    where: {
+      deletedAt: null
+    }
+  })
 
   return data.length ? data : {message: 'User not exist'}
 }
@@ -12,7 +16,7 @@ const getAllUsers = async ()=> {
 
 
 //USER ADD
-const addUser = async ({ firstName, lastName, email, password, phoneNumber, isAdmin, userId })=> {
+const addUser = async ({ adminId, firstName, lastName, email, password, phoneNumber, isAdmin })=> {
 
   if(!firstName || !lastName || !email || !password || !phoneNumber){
     return {message:'Not filled in all parts'}
@@ -28,8 +32,7 @@ const addUser = async ({ firstName, lastName, email, password, phoneNumber, isAd
   })
 
   const creatingUserLog = new Log({
-    userId,
-    isAdmin,
+    userId: adminId,
     actionType: 'CREATED',
     dataType: 'USER'
   })
@@ -43,7 +46,7 @@ const addUser = async ({ firstName, lastName, email, password, phoneNumber, isAd
 
 
 //USER UPDATE
-const updateUser = async ({userId, isAdmin, firstName, lastName, email, password, phoneNumber }) => {
+const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber}) => {
   
   const user = await user.findByPk(userId)
 
@@ -52,27 +55,26 @@ const updateUser = async ({userId, isAdmin, firstName, lastName, email, password
   }
 
   await user.Updata({
-    isAdmin,
+    isAdmin,//If admin wants to make the user admin.
     firstName,
     lastName,
     email,
     password,
     phoneNumber,
-    deletedAt,
+    deletedAt, //If admin wants to restore the user.
     updateAt: new Date(),
       where: {
         id: userId
       }  
     })
 
-    const deletingUserLog = new Log({
-      userId,
-      isAdmin,
-      actionType: 'CREATED',
+    const updatinUserLog = new Log({
+      userId: adminId,
+      actionType: 'UPDATED',
       dataType: 'USER'
     })
   
-    await deletingUserLog.save()
+    await updatinUserLog.save()
 
     return {message: 'User updated successfully'}
 }
@@ -83,10 +85,8 @@ const updateUser = async ({userId, isAdmin, firstName, lastName, email, password
 
 
 
-
-
 //USER DELETE
-const deleteUser = async (userId)=> {
+const deleteUser = async ({userId, adminId})=> {
 
   const user = await user.findByPk(userId)
   
@@ -102,6 +102,13 @@ const deleteUser = async (userId)=> {
       id: userId
     }
   })
+  
+  const deletingUserLog = new Log({
+    userId: adminId,
+    actionType: 'DELETED',
+    dataType: 'USER'
+  })
+  await deletingUserLog.save()
 
   return {message: 'User deleted successfully'}
 }

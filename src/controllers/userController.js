@@ -11,19 +11,21 @@ const getUsers = async (req, res)=> {
 
 //ADD USER
 const addUser = async (req, res)=>{
-    const { userId } = req.user
+    const adminId = req.user.userId
     const { firstName, lastName, email, password, phoneNumber, isAdmin } = req.body
-    const result = await userService.addUser({ firstName, lastName, email, password, phoneNumber, isAdmin, userId })
+    const result = await userService.addUser({ adminId, firstName, lastName, email, password, phoneNumber, isAdmin })
     res.json(result)
 }
 
 
 //USER UPDATE
 const updateUser = async (req, res) => {
+    //davamate adminis ID
+    const adminId  = req.user.userId
     const { userId } = req.params
     const { isAdmin, firstName, lastName, email, password, phoneNumber } = req.body
 
-    const updateUser = await userService.updateUser({userId, isAdmin, firstName, lastName, email, password, phoneNumber })
+    const updateUser = await userService.updateUser({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber})
     res.json(updateUser)
 }
 
@@ -31,8 +33,9 @@ const updateUser = async (req, res) => {
 //USER DELETE
 const deleteUser = async (req, res)=> {
     const { userId } = req.params
+    const adminId = req.user.userId
 
-    const deleteUser = await userService.deleteUser(userId)
+    const deleteUser = await userService.deleteUser({userId, adminId})
     res.json(deleteUser)
 }
 

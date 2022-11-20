@@ -50,12 +50,12 @@ const addProduct = async({userId, name, price, condition, productTypeId, state, 
         productSize,
     });
 
-    const creationLog = new Log({
-        userId,
-        actionType: 'CREATED',
-        dataType: 'PRODUCT'
-      })
-      await creationLog.save()
+    // const creationLog = new Log({
+    //     userId,
+    //     actionType: 'CREATED',
+    //     dataType: 'PRODUCT'
+    //   })
+    //   await creationLog.save()
     
     return {message:'product added successfully'}
 }
@@ -84,15 +84,15 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
             }
         })
 
-        const updatingProductLog = new Log({
-            userId,
-            isAdmin,
-            productId,
-            actionType: 'UPDATED',
-            dataType: 'PRODUCT',
-          })
+        // const updatingProductLog = new Log({
+        //     userId,
+        //     isAdmin,
+        //     productId,
+        //     actionType: 'UPDATED',
+        //     dataType: 'PRODUCT',
+        //   })
     
-          await updatingProductLog.save()
+        //   await updatingProductLog.save()
 
         return {message: 'product updated by admin'}
     }
@@ -112,19 +112,16 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
         }
     })
 
-    const updatingProductLog = new Log({
-        userId,
-        productId,
-        actionType: 'UPDATED',
-        dataType: 'PRODUCT'
-      })
-      await updatingProductLog.save()
+    // const updatingProductLog = new Log({
+    //     userId,
+    //     productId,
+    //     actionType: 'UPDATED',
+    //     dataType: 'PRODUCT'
+    //   })
+    //   await updatingProductLog.save()
 
     return {message: 'product updated'}
 }
-
-
-
 
 
 
