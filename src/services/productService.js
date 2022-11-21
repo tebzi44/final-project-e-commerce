@@ -27,8 +27,8 @@ const getAllProducts = async ({ isAdmin, userId }) => {
 
 
 
-//ADD PRODUCT
-const addProduct = async({userId, name, price, condition, productTypeId, state, productSize})=> {
+//ADD PRODUCT - works well +
+const addProduct = async ({userId, name, price, condition, productTypeId, state, productSize})=> {
 
     // console.log({userId, isAdmin,name, price, condition, productTypeId, state, productSize});
 
@@ -37,8 +37,6 @@ const addProduct = async({userId, name, price, condition, productTypeId, state, 
         return {message:'Not filled in all parts'}
     }
 
-
-// ერორს მიწერ productTypeId არ უნდა იყოს null-იო!!
     await Product.create({
         userId,
         createdAt: new Date(),
@@ -50,12 +48,12 @@ const addProduct = async({userId, name, price, condition, productTypeId, state, 
         productSize,
     });
 
-    // const creationLog = new Log({
-    //     userId,
-    //     actionType: 'CREATED',
-    //     dataType: 'PRODUCT'
-    //   })
-    //   await creationLog.save()
+    const creationLog = new Log({
+        userId,
+        actionType: 'CREATED',
+        dataType: 'PRODUCT'
+      })
+      await creationLog.save()
     
     return {message:'product added successfully'}
 }
@@ -66,7 +64,7 @@ const addProduct = async({userId, name, price, condition, productTypeId, state, 
 
 
 
-//UPDATE PRODUCT
+//UPDATE PRODUCT 
 const updateProductById = async ({productId, userId, isAdmin, name, price, condition, productTypeId, state, productSize}) => {
 
     if(isAdmin === 1) {
@@ -91,7 +89,6 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
         //     actionType: 'UPDATED',
         //     dataType: 'PRODUCT',
         //   })
-    
         //   await updatingProductLog.save()
 
         return {message: 'product updated by admin'}
@@ -139,21 +136,22 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
             }
         })
 
-        const deletingProductLog = new Log({
-            userId,
-            isAdmin,
-            productId,
-            actionType: 'DELETED',
-            dataType: 'PRODUCT'
-          })
-          await deletingProductLog.save()
+        // const deletingProductLog = new Log({
+        //     userId,
+        //     isAdmin,
+        //     productId,
+        //     actionType: 'DELETED',
+        //     dataType: 'PRODUCT'
+        //   })
+        // await deletingProductLog.save()
 
         return {message: 'product deleted by admin'}
     }
 
+    console.log(isAdmin, userId, productId);
 
     await Product.update({
-        deleteAt: new Date(),
+        deletedAt: new Date(),
         where: {
             id: productId,
             userId,
@@ -161,13 +159,13 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
         }
     })
 
-    const deletingProductLog = new Log({
-        userId,
-        productId,
-        actionType: 'DELETED',
-        dataType: 'PRODUCT'
-      })
-      await deletingProductLog.save()
+    // const deletingProductLog = new Log({
+    //     userId,
+    //     productId,
+    //     actionType: 'DELETED',
+    //     dataType: 'PRODUCT'
+    //   })
+    //   await deletingProductLog.save()
 
     return {message: 'product deleted by user'}
 }

@@ -33,7 +33,7 @@ const connection = new Sequelize(
 models.map((m) => m.init(connection));
 
 
-//eta ras
+//one
 User.hasMany(Product, {
   foreignKey: {
     name: 'userId',
@@ -48,12 +48,10 @@ Product.belongsTo(User, {
   }
 })
 
-
-
-//second one
+//two
 Product_type.hasMany(Product, {
   foreignKey: {
-    names: 'productTypeId',
+    name: 'productTypeId',
     allowNull:false
   }
 })
@@ -64,9 +62,6 @@ Product.belongsTo(Product_type, {
     allowNull:false
   }
 });
-
-
-
 
 
 (async () => {

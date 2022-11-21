@@ -44,6 +44,10 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
     return {message:'Not filled in correctly'}  
   }
 
+  if(!/^[0-9,+]+$/.test(phoneNumber)){
+    return ({message: 'phoneNumber must be only number'})
+  }
+
 
   const checkEmail = await User.findOne({
       where: {

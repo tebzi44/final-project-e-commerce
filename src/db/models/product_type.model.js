@@ -11,7 +11,7 @@ class Product_type extends Model {
     }, {
       sequelize: connection,
       tableName: 'product_types',
-      //es davamate
+      //this added vVv
       timestamps: true
     });
   }

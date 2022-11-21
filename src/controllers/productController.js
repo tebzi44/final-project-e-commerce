@@ -8,21 +8,19 @@ const getProduct = async (req, res) => {
 
     const data = await productService.getAllProducts({ isAdmin, userId });
 
-    return res.json(data);
+    res.json(data);
 }
 
 
 
 
 
-//ADD-PRODUCT
+//ADD-PRODUCT - works well +
 const addProduct = async (req, res) => {
-    const {userId, isAdmin} = req.user
+    const { userId } = req.user
     const { name, price, condition, productTypeId, state, productSize } = req.body
 
-    // console.log(userId, isAdmin, req.body);
-
-    const result = await productService.addProduct({userId, isAdmin ,name, price, condition, productTypeId, state, productSize})
+    const result = await productService.addProduct({userId, name, price, condition, productTypeId, state, productSize})
 
     res.json(result)
 }
@@ -32,7 +30,7 @@ const addProduct = async (req, res) => {
 //UPDATE
 const updateProduct = async (req, res) => {
     const { isAdmin, userId } = req.user
-    const {name, price, condition, productTypeId, state, productSize} = req.body
+    const { name, price, condition, productTypeId, state, productSize } = req.body
     const { productId } = req.params;
 
     const result = await productService.updateProductById({isAdmin, productId, userId, name, price, condition, productTypeId, state, productSize });
@@ -50,9 +48,8 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     const { isAdmin, userId } = req.user
     const { productId } = req.params
-
-
-    const result = productService.deleteProductById({userId, productId, isAdmin})
+    
+    const result = await productService.deleteProductById({ userId, productId, isAdmin })
 
     res.json(result)
 }

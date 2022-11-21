@@ -22,6 +22,7 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
     return {message:'Not filled in all parts'}
   }
 
+
   await user.create({
     firstName,
     lastName,
@@ -31,13 +32,12 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
     isAdmin
   })
 
-  const creatingUserLog = new Log({
-    userId: adminId,
-    actionType: 'CREATED',
-    dataType: 'USER'
-  })
-
-  await creatingUserLog.save()
+  // const creatingUserLog = new Log({
+  //   userId: adminId,
+  //   actionType: 'CREATED',
+  //   dataType: 'USER'
+  // })
+  // await creatingUserLog.save()
   
   return {message: 'User added successfully'}
 }
@@ -45,36 +45,35 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
 
 
 
-//USER UPDATE
+//USER UPDATE ??
 const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber}) => {
   
-  const user = await user.findByPk(userId)
+  const user_ = await user.findByPk(userId)
 
-  if(!user){ 
+  if(!user_){ 
     return {message: 'User not found'}
   }
 
-  await user.Updata({
+  await user.update({
     isAdmin,//If admin wants to make the user admin.
     firstName,
     lastName,
     email,
     password,
     phoneNumber,
-    deletedAt, //If admin wants to restore the user.
-    updateAt: new Date(),
+    // deletedAt, //If admin wants to restore the user.
+    updatedAt: new Date(),
       where: {
         id: userId
       }  
     })
 
-    const updatinUserLog = new Log({
-      userId: adminId,
-      actionType: 'UPDATED',
-      dataType: 'USER'
-    })
-  
-    await updatinUserLog.save()
+    // const updatinUserLog = new Log({
+    //   userId: adminId,
+    //   actionType: 'UPDATED',
+    //   dataType: 'USER'
+    // })
+    // await updatinUserLog.save()
 
     return {message: 'User updated successfully'}
 }
@@ -85,12 +84,12 @@ const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email,
 
 
 
-//USER DELETE
+//USER DELETE??
 const deleteUser = async ({userId, adminId})=> {
 
-  const user = await user.findByPk(userId)
+  const user_ = await user.findByPk(userId)
   
-  if(!user){
+  if(!user_){
     if(user.deletedAt !== null){
       return {message: 'The user has already been deleted'}
     }
@@ -103,12 +102,12 @@ const deleteUser = async ({userId, adminId})=> {
     }
   })
   
-  const deletingUserLog = new Log({
-    userId: adminId,
-    actionType: 'DELETED',
-    dataType: 'USER'
-  })
-  await deletingUserLog.save()
+  // const deletingUserLog = new Log({
+  //   userId: adminId,
+  //   actionType: 'DELETED',
+  //   dataType: 'USER'
+  // })
+  // await deletingUserLog.save()
 
   return {message: 'User deleted successfully'}
 }

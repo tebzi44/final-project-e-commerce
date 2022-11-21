@@ -6,7 +6,7 @@ const productController = require('../controllers/productController')
 //+
 router.get('/', productController.getProduct)
 
-//??ნახევრად აწყობილი, ერორები აქვს
+//+
 router.post('/', productController.addProduct)
 //??
 router.put('/:productId', productController.updateProduct)

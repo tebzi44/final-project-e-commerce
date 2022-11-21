@@ -5,7 +5,6 @@ const userService = require('../services/userService')
 const getUsers = async (req, res)=> {
     const data = await userService.getAllUsers()  
     res.json(data)
-
 }
 
 
@@ -18,9 +17,9 @@ const addUser = async (req, res)=>{
 }
 
 
-//USER UPDATE
+//USER UPDATE ??
 const updateUser = async (req, res) => {
-    //davamate adminis ID
+    //davamate adminis Id
     const adminId  = req.user.userId
     const { userId } = req.params
     const { isAdmin, firstName, lastName, email, password, phoneNumber } = req.body
@@ -30,7 +29,7 @@ const updateUser = async (req, res) => {
 }
 
 
-//USER DELETE
+//USER DELETE ??
 const deleteUser = async (req, res)=> {
     const { userId } = req.params
     const adminId = req.user.userId
