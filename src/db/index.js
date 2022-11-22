@@ -1,4 +1,4 @@
-// const process = require('process');
+const process = require('process');//?-!
 const signale = require('signale');
 const { Sequelize } = require('sequelize');
 
@@ -13,7 +13,7 @@ const models = [Product_type, Product, User];
 const connection = new Sequelize(
   'e-commerce',
   'postgres',
-  'gresi124',
+  process.env.DATABASE_PASSWORD,
   {
     host: 'localhost',
     dialect: 'postgres',

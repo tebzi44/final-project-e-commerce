@@ -5,9 +5,9 @@ const productController = require('../controllers/productController')
 
 //+
 router.get('/', productController.getProduct)
-
 //+
 router.post('/', productController.addProduct)
+
 //??
 router.put('/:productId', productController.updateProduct)
 //??

@@ -61,9 +61,6 @@ const addProduct = async ({userId, name, price, condition, productTypeId, state,
 
 
 
-
-
-
 //UPDATE PRODUCT 
 const updateProductById = async ({productId, userId, isAdmin, name, price, condition, productTypeId, state, productSize}) => {
 
@@ -148,8 +145,6 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
         return {message: 'product deleted by admin'}
     }
 
-    console.log(isAdmin, userId, productId);
-
     await Product.update({
         deletedAt: new Date(),
         where: {
@@ -169,7 +164,6 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
 
     return {message: 'product deleted by user'}
 }
-
 
 
 module.exports = {

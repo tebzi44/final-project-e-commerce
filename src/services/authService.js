@@ -2,8 +2,9 @@ const User = require('../db/models/user.model')
 const jwt = require('jsonwebtoken')
 const Log = require('../mongodb/models/log.model')
 
-// const bcrypt = require('bcrypt')
-// const process = require('process');
+const process = require('process')
+const bcrypt = require('bcrypt')
+
 
 
 const login = async ({
@@ -17,13 +18,12 @@ const login = async ({
     }
   });
 
-
   if (user) {
     const token = jwt.sign({
           userId: user.id,
           isAdmin: user.isAdmin
         },
-        'secretKey123',
+        process.env.SECRET,
         {
           expiresIn: '5h'
         }
@@ -33,7 +33,6 @@ const login = async ({
   }
   return false;
 };
-
 
 
 
@@ -47,7 +46,6 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
   if(!/^[0-9,+]+$/.test(phoneNumber)){
     return ({message: 'phoneNumber must be only number'})
   }
-
 
   const checkEmail = await User.findOne({
       where: {
@@ -64,23 +62,14 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
       return { message:'user already exists'}
   }
   
-  //>>>>
-  // const hashedPass = bcrypt.hash(
-  //     password,
-  //     process.env.saltRounds,
-  //     function(err, hash) {
-  //         if(err) {
-  //             return console.log({Error: err});
-  //         }
-  //         return hash
-  //     });
-  //>>>>
-
+  try {
+    const hash = bcrypt.hashSync(password, Number(process.env.SALT_AMOUNT));
+  
   await User.create({
       firstName,
       lastName,
       email,
-      password,
+      password: hash,
       phoneNumber
     });
 
@@ -92,6 +81,11 @@ const regist = async ({firstName, lastName, email, password, phoneNumber}) => {
     await creationLog.save()
 
   return { message: 'user add'}
+
+} catch (e) {
+  // console.log(e);
+  return { message: 'INTERNAL_SERVER_ERROR' };
+}
 }
 
 

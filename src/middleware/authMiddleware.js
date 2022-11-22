@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const process = require('process');
 
 const checkAuth = (req, res, next) => {
   try {
@@ -7,7 +7,7 @@ const checkAuth = (req, res, next) => {
 
     const { userId, isAdmin } = jwt.verify(
       token,
-      'secretKey123',);
+      process.env.SECRET,);
 
     req.user = {
       userId,

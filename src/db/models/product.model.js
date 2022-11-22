@@ -24,7 +24,7 @@ class Product extends Model {
         allowNull: true,
       },
       // userId: {
-      //   type: DataTypes.INTEGER,
+      //   type: DataTypes.INTEGER,   //--
       //   allowNull: true,
       // },
       condition: {
@@ -32,7 +32,7 @@ class Product extends Model {
         allowNull: false,
       },
       // productTypeId: {
-      //   type: DataTypes.INTEGER,
+      //   type: DataTypes.INTEGER,    //--
       //   allowNull: false,
       // },
       state: {
