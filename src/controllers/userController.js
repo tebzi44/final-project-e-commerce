@@ -22,12 +22,12 @@ const updateUser = async (req, res) => {
     try{
         const adminId  = req.user.userId
         const { userId } = req.params
-        const { isAdmin, firstName, lastName, email, password, phoneNumber } = req.body
-        
-        const updateUser = await userService.updateUser({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber})
-        res.json(updateUser)
+        const { firstName, lastName, email, password, phoneNumber } = req.body
+        // console.log({adminId, userId, firstName, lastName, email, password, phoneNumber});
+        const updateUser = await userService.updateUser({adminId, userId, firstName, lastName, email, password, phoneNumber})
+        res.status(200).json(updateUser)
     } catch (e) {
-        // console.log(e);
+        console.log(e);
         return res.status(500).json({
             message: 'SERVER ERROR'
           });
@@ -43,6 +43,7 @@ const deleteUser = async (req, res)=> {
         
         const deleteUser = await userService.deleteUser({userId, adminId})
         res.json(deleteUser)
+
     } catch (e) {
         // console.log(e);
         return res.status(500).json({

@@ -30,7 +30,6 @@ const addProduct = async (req, res) => {
 //UPDATE
 const updateProduct = async (req, res) => {
     try {
-
         const { isAdmin, userId } = req.user
         const { name, price, condition, productTypeId, state, productSize } = req.body
         const { productId } = req.params;

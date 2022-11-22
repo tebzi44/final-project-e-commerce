@@ -98,7 +98,9 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
         productTypeId,
         state,
         productSize,
-        updatedAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
         where: {
             id: productId,
             userId,
@@ -146,7 +148,9 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
     }
 
     await Product.update({
-        deletedAt: new Date(),
+        deletedAt: new Date()
+    },
+    {
         where: {
             id: productId,
             userId,
@@ -154,13 +158,13 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
         }
     })
 
-    const deletingProductLog = new Log({
-        userId,
-        productId,
-        actionType: 'DELETED',
-        dataType: 'PRODUCT'
-      })
-      await deletingProductLog.save()
+    // const deletingProductLog = new Log({
+    //     userId,
+    //     productId,
+    //     actionType: 'DELETED',
+    //     dataType: 'PRODUCT'
+    //   })
+    //   await deletingProductLog.save()
 
     return {message: 'product deleted by user'}
 }

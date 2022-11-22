@@ -1,6 +1,8 @@
 const user = require('../db/models/user.model');
 const Log = require('../mongodb/models/log.model')
 
+const process = require('process')
+const bcrypt = require('bcrypt')
 
 const getAllUsers = async ()=> {
   const data = await user.findAll({
@@ -46,22 +48,28 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
 
 
 //USER UPDATE 
-const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber}) => {
+const updateUser = async ({adminId, userId, firstName, lastName, email, password, phoneNumber}) => {
+  // console.log({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber});
   
+
   const user_ = await user.findByPk(userId)
 
   if(!user_){ 
     return {message: 'User not found'}
   }
 
-  await user.update({
-    isAdmin,//If admin wants to make the user admin.
+  const hash = bcrypt.hashSync(password, Number(process.env.SALT_AMOUNT));
+
+  await user.update(
+    {
     firstName,
     lastName,
     email,
-    password,
+    password: hash,
     phoneNumber,
-    updatedAt: new Date(),
+    updatedAt: new Date()
+    },
+    {
       where: {
         id: userId
       }  
@@ -94,8 +102,11 @@ const deleteUser = async ({userId, adminId})=> {
     }
     return {message: 'User not found'}
   }
-  await user.update({
-    deletedAt: new Date(),
+  await user.update(
+    {
+    deletedAt: new Date()
+    },
+    {
     where: {
       id: userId
     }

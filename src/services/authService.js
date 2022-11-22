@@ -11,14 +11,15 @@ const login = async ({
   email, password
 }) => {
   
+  
   const user = await User.findOne({
     where: {
-      email,
-      password
+      email
     }
   });
-
-  if (user) {
+  const isPasswordTrue = bcrypt.compareSync(password, user.password, Number(process.env.SALT_AMOUNT));
+  // const isPasswordTrue = true //es dtoebit iyos
+  if (user && isPasswordTrue) {
     const token = jwt.sign({
           userId: user.id,
           isAdmin: user.isAdmin

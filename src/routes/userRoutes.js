@@ -10,7 +10,7 @@ router.get('/', userController.getUsers)
 router.post('/', userController.addUser)
 //
 router.put('/:userId', userController.updateUser)
-//
+//+
 router.delete('/:userId', userController.deleteUser)
 
 
