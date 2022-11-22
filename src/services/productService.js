@@ -79,14 +79,14 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
             }
         })
 
-        // const updatingProductLog = new Log({
-        //     userId,
-        //     isAdmin,
-        //     productId,
-        //     actionType: 'UPDATED',
-        //     dataType: 'PRODUCT',
-        //   })
-        //   await updatingProductLog.save()
+        const updatingProductLog = new Log({
+            userId,
+            isAdmin,
+            productId,
+            actionType: 'UPDATED',
+            dataType: 'PRODUCT',
+          })
+          await updatingProductLog.save()
 
         return {message: 'product updated by admin'}
     }
@@ -106,13 +106,13 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
         }
     })
 
-    // const updatingProductLog = new Log({
-    //     userId,
-    //     productId,
-    //     actionType: 'UPDATED',
-    //     dataType: 'PRODUCT'
-    //   })
-    //   await updatingProductLog.save()
+    const updatingProductLog = new Log({
+        userId,
+        productId,
+        actionType: 'UPDATED',
+        dataType: 'PRODUCT'
+      })
+      await updatingProductLog.save()
 
     return {message: 'product updated'}
 }
@@ -133,14 +133,14 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
             }
         })
 
-        // const deletingProductLog = new Log({
-        //     userId,
-        //     isAdmin,
-        //     productId,
-        //     actionType: 'DELETED',
-        //     dataType: 'PRODUCT'
-        //   })
-        // await deletingProductLog.save()
+        const deletingProductLog = new Log({
+            userId,
+            isAdmin,
+            productId,
+            actionType: 'DELETED',
+            dataType: 'PRODUCT'
+          })
+        await deletingProductLog.save()
 
         return {message: 'product deleted by admin'}
     }
@@ -154,13 +154,13 @@ const deleteProductById = async ({isAdmin, userId, productId})=> {
         }
     })
 
-    // const deletingProductLog = new Log({
-    //     userId,
-    //     productId,
-    //     actionType: 'DELETED',
-    //     dataType: 'PRODUCT'
-    //   })
-    //   await deletingProductLog.save()
+    const deletingProductLog = new Log({
+        userId,
+        productId,
+        actionType: 'DELETED',
+        dataType: 'PRODUCT'
+      })
+      await deletingProductLog.save()
 
     return {message: 'product deleted by user'}
 }

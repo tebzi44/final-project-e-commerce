@@ -32,12 +32,12 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
     isAdmin
   })
 
-  // const creatingUserLog = new Log({
-  //   userId: adminId,
-  //   actionType: 'CREATED',
-  //   dataType: 'USER'
-  // })
-  // await creatingUserLog.save()
+  const creatingUserLog = new Log({
+    userId: adminId,
+    actionType: 'CREATED',
+    dataType: 'USER'
+  })
+  await creatingUserLog.save()
   
   return {message: 'User added successfully'}
 }
@@ -45,7 +45,7 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
 
 
 
-//USER UPDATE ??
+//USER UPDATE 
 const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber}) => {
   
   const user_ = await user.findByPk(userId)
@@ -61,19 +61,18 @@ const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email,
     email,
     password,
     phoneNumber,
-    // deletedAt, //If admin wants to restore the user.
     updatedAt: new Date(),
       where: {
         id: userId
       }  
     })
 
-    // const updatinUserLog = new Log({
-    //   userId: adminId,
-    //   actionType: 'UPDATED',
-    //   dataType: 'USER'
-    // })
-    // await updatinUserLog.save()
+    const updatinUserLog = new Log({
+      userId: adminId,
+      actionType: 'UPDATED',
+      dataType: 'USER'
+    })
+    await updatinUserLog.save()
 
     return {message: 'User updated successfully'}
 }
@@ -84,7 +83,7 @@ const updateUser = async ({adminId, userId, isAdmin, firstName, lastName, email,
 
 
 
-//USER DELETE??
+//USER DELETE
 const deleteUser = async ({userId, adminId})=> {
 
   const user_ = await user.findByPk(userId)
@@ -102,12 +101,12 @@ const deleteUser = async ({userId, adminId})=> {
     }
   })
   
-  // const deletingUserLog = new Log({
-  //   userId: adminId,
-  //   actionType: 'DELETED',
-  //   dataType: 'USER'
-  // })
-  // await deletingUserLog.save()
+  const deletingUserLog = new Log({
+    userId: adminId,
+    actionType: 'DELETED',
+    dataType: 'USER'
+  })
+  await deletingUserLog.save()
 
   return {message: 'User deleted successfully'}
 }

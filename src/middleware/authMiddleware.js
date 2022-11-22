@@ -27,27 +27,3 @@ const checkAuth = (req, res, next) => {
 
 
 module.exports = checkAuth;
-
-
-
-
-
-
-
-
-// try {
-//   const token = req.headers.authorization.split(' ')[1];
-  
-//   const { userId } = jwt.verify(
-//     token,
-//     'secretKey',)
-
-//     req.user = { userId }
-
-  
-//     return next()
-//   } catch (error) {
-
-//     return res.json({ message: 'Unauthorized'})
-//   }
-// };
