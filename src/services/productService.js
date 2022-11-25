@@ -52,7 +52,9 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
     condition,
     productTypeId,
     state,
-    productSize,
+    productSize 
+    },
+    {
         where: {
             id: productId,
             deletedAt: null,
@@ -80,6 +82,8 @@ const updateProductById = async ({productId, userId, isAdmin, name, price, condi
 const deleteProductById = async ({isAdmin, userId, productId})=> {
     await Product.update({
         deletedAt: new Date(),
+    },
+    {
         where: {
             ...(isAdmin === 0 ? {userId} : {}),
             id: productId,

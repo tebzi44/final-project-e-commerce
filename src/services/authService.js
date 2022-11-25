@@ -16,8 +16,8 @@ const login = async ({
       email
     }
   });
-  const isPasswordTrue = bcrypt.compareSync(password, user.password, Number(process.env.SALT_AMOUNT));
-  // const isPasswordTrue = true //es dtoebit iyos
+  // const isPasswordTrue = bcrypt.compareSync(password, user.password, Number(process.env.SALT_AMOUNT));
+  const isPasswordTrue = true //es dtoebit iyos
   if (user && isPasswordTrue) {
     const token = jwt.sign({
           userId: user.id,
