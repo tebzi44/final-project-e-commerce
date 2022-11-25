@@ -1,33 +1,26 @@
 const productService = require('../services/productService')
 
 
-//GET-PRODUCT-controller - works well
+//GET-PRODUCT 
 const getProduct = async (req, res) => {
     const { isAdmin, userId } = req.user
-    // console.log(userId, isAdmin);
-
     const data = await productService.getAllProducts({ isAdmin, userId });
-
     res.json(data);
 }
 
 
 
-
-
-//ADD-PRODUCT - works well +
+//ADD-PRODUCT
 const addProduct = async (req, res) => {
     const { userId } = req.user
     const { name, price, condition, productTypeId, state, productSize } = req.body
-
     const result = await productService.addProduct({userId, name, price, condition, productTypeId, state, productSize})
-
     res.json(result)
 }
 
 
 
-//UPDATE
+//UPDATE-PRODUCT
 const updateProduct = async (req, res) => {
     try {
         const { isAdmin, userId } = req.user
@@ -48,16 +41,11 @@ const updateProduct = async (req, res) => {
 
 
 
-
-
-
-//DELETE
+//DELETE-PRODUCT
 const deleteProduct = async (req, res) => {
     try {
-
         const { isAdmin, userId } = req.user
         const { productId } = req.params
-        
         const result = await productService.deleteProductById({ userId, productId, isAdmin })
         
         res.json(result)
@@ -68,7 +56,6 @@ const deleteProduct = async (req, res) => {
           });
     }
 }
-
 
 
 

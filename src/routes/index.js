@@ -3,7 +3,6 @@ const router = require('express').Router();
 // Custom Routes
 const ProductRoutes = require('./productRoutes');
 const UserRoutes = require('./userRoutes');
-// const product_typeRoutes = require('./product_typesRoute')
 
 //AUTH
 const AuthRoutes = require('./authRoutes');

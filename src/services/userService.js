@@ -49,9 +49,7 @@ const addUser = async ({ adminId, firstName, lastName, email, password, phoneNum
 
 //USER UPDATE 
 const updateUser = async ({adminId, userId, firstName, lastName, email, password, phoneNumber}) => {
-  // console.log({adminId, userId, isAdmin, firstName, lastName, email, password, phoneNumber});
   
-
   const user_ = await user.findByPk(userId)
 
   if(!user_){ 
@@ -67,7 +65,6 @@ const updateUser = async ({adminId, userId, firstName, lastName, email, password
     email,
     password: hash,
     phoneNumber,
-    updatedAt: new Date()
     },
     {
       where: {
@@ -84,10 +81,6 @@ const updateUser = async ({adminId, userId, firstName, lastName, email, password
 
     return {message: 'User updated successfully'}
 }
-
-
-
-
 
 
 

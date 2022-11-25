@@ -11,7 +11,6 @@ const login = async ({
   email, password
 }) => {
   
-  
   const user = await User.findOne({
     where: {
       email
@@ -26,10 +25,9 @@ const login = async ({
         },
         process.env.SECRET,
         {
-          expiresIn: '5h'
+          expiresIn: '1h'
         }
       );
-
     return token;
   }
   return false;
